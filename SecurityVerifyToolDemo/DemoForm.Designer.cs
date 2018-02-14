@@ -46,9 +46,9 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btnGenerateVerifyKey = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtOutDllRetCode = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.txtOutDllRetCode = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -215,6 +215,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Output Fields";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(329, 79);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(61, 13);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Dll Rt Code";
+            // 
+            // txtOutDllRetCode
+            // 
+            this.txtOutDllRetCode.Location = new System.Drawing.Point(7, 76);
+            this.txtOutDllRetCode.Name = "txtOutDllRetCode";
+            this.txtOutDllRetCode.Size = new System.Drawing.Size(315, 20);
+            this.txtOutDllRetCode.TabIndex = 16;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.btnGenerateVerifyKey);
@@ -231,23 +247,7 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Input Fields";
             // 
-            // txtOutDllRetCode
-            // 
-            this.txtOutDllRetCode.Location = new System.Drawing.Point(7, 76);
-            this.txtOutDllRetCode.Name = "txtOutDllRetCode";
-            this.txtOutDllRetCode.Size = new System.Drawing.Size(315, 20);
-            this.txtOutDllRetCode.TabIndex = 16;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(329, 79);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(61, 13);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "Dll Rt Code";
-            // 
-            // Form1
+            // DemoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -255,7 +255,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "Form1";
+            this.Name = "DemoForm";
             this.Text = "Security Verify Tool";
             this.Load += new System.EventHandler(this.DemoForm_Load);
             this.groupBox1.ResumeLayout(false);

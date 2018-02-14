@@ -98,7 +98,7 @@ namespace Tr.Com.Panaroma.Ngcrd.SecurityVerifyTool
             {
                 if (String.IsNullOrEmpty(inSModeId))
                 {
-                    throw new Exception("Invalid Service Id");
+                    throw new Exception("Geçersiz Servis Kimliği");
                 }
 
                 StringBuilder dllOutStr = new StringBuilder();
@@ -109,7 +109,7 @@ namespace Tr.Com.Panaroma.Ngcrd.SecurityVerifyTool
                     String[] dllOutStrArr = dllOutStr.ToString().Split(' ');
                     if (dllOutStrArr == null || dllOutStrArr.Length != DLL_OUTSTR_SPLIT_COUNT)
                     {
-                        throw new Exception("Dll Return Data Error");
+                        throw new Exception("DLL Veri Çıkışı Hatası");
                     }
                     outVerificationKey = dllOutStrArr[DLL_OUTSTR_SECURITY_VERIFY_KEY_INDEX];
                     outFiscalCode = dllOutStrArr[DLL_OUTSTR_FISCAL_CODE_INDEX];
@@ -121,17 +121,17 @@ namespace Tr.Com.Panaroma.Ngcrd.SecurityVerifyTool
                      * So, i read first 5 chars.
                      **/
                     outServiceId = dllOutStrArr[DLL_OUTSTR_SERVICE_ID_INDEX].Substring(0,5);
-                    outErrDescription = "NoError";
+                    outErrDescription = "Hata Yok";
                     return DLL_SUCCESS_RETURN_CODE;
 
                 }
                 else if (dllReturnCode == DLL_ERROR_RETURN_CODE)
                 {
-                    throw new Exception("Invalid Service Id Error By Dll");
+                    throw new Exception("Geçersiz Servis Kimliği");
                 }
                 else
                 {
-                    throw new Exception("DLL Returned Unknown Return Code");
+                    throw new Exception("DLL Bilinmeyen sonuç");
                 }
             }
             catch(Exception ex)
@@ -168,9 +168,15 @@ namespace Tr.Com.Panaroma.Ngcrd.SecurityVerifyTool
             outFiscalNum = null;
             outServiceId = null;
             outErrDescription = null;
-            if (String.IsNullOrEmpty(inFiscalNum) || String.IsNullOrEmpty(inServiceId))
+            if (String.IsNullOrEmpty(inFiscalNum))
             {
-                outErrDescription = "Invalid Fiscal Num or Service Id";
+                outErrDescription = "Geçersiz Mali Kod ve Numara";
+                return DLL_ERROR_RETURN_CODE;
+            }
+
+            if (String.IsNullOrEmpty(inServiceId))
+            {
+                outErrDescription = "Geçersiz Servis Kimliği";
                 return DLL_ERROR_RETURN_CODE;
             }
 
@@ -188,9 +194,16 @@ namespace Tr.Com.Panaroma.Ngcrd.SecurityVerifyTool
 
             if (genVerifyKeyResult==DLL_SUCCESS_RETURN_CODE)
             {
-                if (inFiscalNum!=outFiscalNumTmp || inServiceId!=outServiceIdTmp)
+                //00000003 kosulu üretim versiyonu cihazlardaki hatadan dolayı eklendi...
+                //Cihaz mali hale alınmamış ise fiscalnum 00000003 olarak dönüyor.
+                if (outFiscalNumTmp != "00000003" && inFiscalNum != outFiscalNumTmp)
                 {
-                    outErrDescription = "Fiscal Num or Service Id Authentication Fail";
+                    outErrDescription = "Cihaza Girilen Servis Kimliği ile Şifre Talebindeki Kimlik Bilgisi Uyuşmuyor veya Cihazın Mali Kod-Numarası Şifre Talebindeki Cihazla Aynı Değil";
+                    return DLL_ERROR_RETURN_CODE;
+                }
+                if (inServiceId!=outServiceIdTmp)
+                {
+                    outErrDescription = "Cihaza Girilen Servis Kimliği ile Şifre Talebindeki Kimlik Bilgisi Uyuşmuyor veya Cihazın Mali Kod-Numarası Şifre Talebindeki Cihazla Aynı Değil";
                     return DLL_ERROR_RETURN_CODE;
                 }
 
